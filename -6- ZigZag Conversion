@@ -1,0 +1,39 @@
+public class Solution {
+    public String convert(String s, int nRows) {
+            char[][] result=new char[nRows][s.length()];
+	        if(nRows==1){
+	            return s;
+	        }
+	        int i=0;
+	        int j=0;
+	        boolean flag=true;
+	        for(int k=0;k<s.length();k++){
+	            result[i][j]=s.charAt(k);
+	            if(flag){
+	                i++;
+	            }
+	            else{
+	                j++;
+	                i--;
+	            }    
+	            
+	            if(i==nRows-1){
+	                flag=false;
+	            }
+	            else if(i==0){
+	                flag=true;
+	            }
+	        }
+	        
+	        StringBuilder sb=new StringBuilder();
+	        for(int a=0;a<nRows;a++){
+	            for(int b=0;b<s.length();b++){
+	                if(result[a][b]!=' '){
+	                    sb.append(result[a][b]);
+	                }
+	            }
+	        }
+	        String res=sb.toString();
+	        return res;
+    }
+}
