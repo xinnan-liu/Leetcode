@@ -1,0 +1,17 @@
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        int n=A.length;
+        if(n == 0) return n;
+        int shift = 0;
+        int lastNum = A[0];
+        for(int i = 1; i < n; i++){
+            if(lastNum == A[i])
+                shift++;
+            else{
+                lastNum = A[i];
+                if(shift!=0) A[i-shift] = A[i];
+            }
+        }
+        return n-shift;
+    }
+}
