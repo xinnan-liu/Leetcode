@@ -1,0 +1,29 @@
+public class Solution {
+    public int firstMissingPositive(int[] A) {
+        if(A.length==0){
+            return 1;
+        }
+        Arrays.sort(A);
+        Map<Integer,Integer> m= new HashMap<Integer,Integer>();
+        int result=1;
+        boolean f=false;
+        for(int i=0;i<A.length;i++){
+            if(A[i]<=0){
+                ;
+            }else if(A[i]==result&&(!m.containsValue(A[i]))){
+                result++;
+                m.put(i,A[i]);
+            }else if(A[i]==result&&m.containsValue(A[i])){
+                ;
+            }else{
+                f=true;
+            }
+        }
+        if(f){
+            return result;
+        }else{
+            return A[A.length-1]+1;
+        }
+        
+    }
+}
