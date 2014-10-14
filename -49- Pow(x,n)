@@ -1,0 +1,18 @@
+public class Solution {
+   double pow_positive(double x, int n) {  
+        if (n == 0) {  
+            return 1;  
+        }  
+        else if (n == 1) {  
+            return x;  
+        }  
+        else {  
+            double t = pow(x, n / 2);  
+            return t * t * ((n & 1) == 0 ? 1 : x);  
+        }          
+    }  
+      
+    double pow(double x, int n) {  
+        return n < 0 ? 1 / pow_positive(x, -n) : pow_positive(x, n);  
+    }  
+}
