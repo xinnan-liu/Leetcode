@@ -1,0 +1,84 @@
+
+public class Solution {
+    int width;
+    int height;
+    boolean [][] isUsed;
+    public boolean exist(char[][] board, String word) {
+        if (word.length() == 0) return true;
+        height = board.length;
+        if (height == 0) return false;
+        width = board[0].length;
+        if (width == 0) return false;
+
+        char letter = word.charAt(0);
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] == letter) {
+                    isUsed = new boolean[height][width];
+                    if (isExist(board, word.substring(1), i, j, isUsed)) return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean isExist(char[][]board, String word, int i, int j, boolean[][] isUsed) {
+         // base case
+         if (word.length() == 0) return true;
+         char letter = word.charAt(0);
+         isUsed[i][j] = true;
+         boolean found = false;
+
+         // for up, down, left, and right
+         int[] casesForY = {i-1, i+1, i, i};
+         int[] casesForX = {j, j, j-1, j+1};
+
+         for (int k = 0; k < 4; k++) {
+             int targetY = casesForY[k];
+             int targetX = casesForX[k];
+             if (canVisit(i, j, targetY, targetX, isUsed, letter, board)) {
+                 found = isExist(board, word.substring(1), targetY, targetX, isUsed);
+                 isUsed[targetY][targetX] = false;
+                 if (found) return found;
+             }
+         }
+         return found;
+    }
+    public boolean canVisit(int myY, int myX, int targetY, int targetX, boolean [][]isUsed, char letter, char[][] board) {
+        if (myY == 0 && targetY < myY) return false; // where i = 0 and up case
+        if (myY == height-1 && targetY > myY) return false; // where i = last row and down case
+        if (myX == 0 && targetX < myX) return false; // where j = 0 and left case
+        if (myX == width-1 && targetX > myX) return false; // where j = last column and right case
+
+        if (isUsed[targetY][targetX]) return false; // target cell is already visited
+        if (board[targetY][targetX] != letter) return false; // target cell's letter is not what we are looking for.
+
+        return true;
+    }
+}
+
+
+/*
+public class Solution {
+    public boolean exist(char[][] board, String word) {
+        Map<Character,Integer> m= new HashMap<Character,Integer>();
+        int r=board.length;
+        int c=board[0].length;
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                m.put(board[i][j],i*c+j);
+            }
+        }
+        int a=m.get(word.charAt(0));
+        for(int i=1;i<word.legnth();i++){
+            int temp=m.get(word.charAt(i));
+            if(temp-a!=1||temp-a!=c){
+                return false;
+            }else{
+                a=temp;
+            }
+        }
+        return true;
+    }
+}
+*/
