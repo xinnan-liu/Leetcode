@@ -1,0 +1,16 @@
+public class Solution {
+    public int findMin(int[] num) {
+         int len = num.length;  
+        if (len == 1) return num[0];  
+        int left = 0, right = len-1;  
+        while (num[left] > num[right]) { // good idea  
+            int mid = left+(right-left)/2;  
+            if (num[mid] > num[right]) {  
+                left = mid + 1;  
+            } else {  
+                right = mid; // be careful, not mid-1, as num[mid] maybe the minimum  
+            }  
+        }  
+        return num[left];  
+    }
+}
