@@ -1,0 +1,23 @@
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        int n=A.length;
+        if(n == 0) return n;
+        int value=A[0];
+        int count=1;
+        int j=1;
+        for(int i = 1; i < n; i++){
+            if(A[i] == value)
+                count ++;
+            else{
+                 count = 1;
+                value = A[i];
+            }
+            if(count <= 2)
+            {
+                A[j] = A[i];
+                j++;
+            }
+        }
+        return j;
+    }
+}
