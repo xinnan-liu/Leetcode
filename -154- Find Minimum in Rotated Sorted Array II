@@ -1,0 +1,38 @@
+public class Solution {
+    public int findMin(int[] num) {
+ if (num == null || num.length == 0) {
+            return 0;
+        }
+        
+        int len = num.length;
+        if (len == 1) {
+            return num[0];
+        } else if (len == 2) {
+            return Math.min(num[0], num[1]);
+        }
+        
+        int left = 0;
+        int right = len - 1;
+        
+        while (left < right - 1) {
+            int mid = left + (right - left) / 2;
+            // In this case, the array is sorted.
+            // 这一句很重要，因为我们移除一些元素后，可能会使整个数组变得有序...
+            if (num[left] < num[right]) {
+                return num[left];
+            }
+            
+            // left side is sorted. CUT the left side.
+            if (num[mid] > num[left]) {
+                left = mid;
+            // left side is unsorted, right side is sorted. CUT the right side.
+            } else if (num[mid] < num[left]) {
+                right = mid;
+            } else {
+                left++;
+            }
+        }
+        
+        return Math.min(num[left], num[right]);             
+    }
+}
