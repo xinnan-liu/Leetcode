@@ -1,0 +1,20 @@
+public class Solution {
+    public boolean canJump(int[] A) {
+        if (A.length == 0)
+              return false;
+              
+          int step = A[0];
+         
+         for(int i = 1; i < A.length; i++)
+            {
+            if (step > 0)
+             {
+                 step--;
+                 step = Math.max(step, A[i]);
+             }  else{
+                return false;
+            } 
+            }
+         return true;
+    }
+}
