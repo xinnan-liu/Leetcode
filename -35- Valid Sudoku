@@ -1,0 +1,119 @@
+public class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        boolean[] visited = new boolean[9];
+        
+        // row
+        for(int i = 0; i<9; i++){
+            Arrays.fill(visited, false);
+            for(int j = 0; j<9; j++){
+                if(!process(visited, board[i][j]))
+                    return false;
+            }
+        }
+        
+        //col
+        for(int i = 0; i<9; i++){
+            Arrays.fill(visited, false);
+            for(int j = 0; j<9; j++){
+                if(!process(visited, board[j][i]))
+                    return false;
+            }
+        }
+        
+        // sub matrix
+        for(int i = 0; i<9; i+= 3){
+            for(int j = 0; j<9; j+= 3){
+                Arrays.fill(visited, false);
+                for(int k = 0; k<9; k++){
+                    if(!process(visited, board[i + k/3][ j + k%3]))
+                    return false;                   
+                }
+            }
+        }
+        return true;
+        
+    }
+    
+    private boolean process(boolean[] visited, char digit){
+        if(digit == '.'){
+            return true;
+        }
+        
+        int num = digit - '0';
+        if ( num < 1 || num > 9 || visited[num-1]){
+            return false;
+        }
+        
+        visited[num-1] = true;
+        return true;
+    }
+        
+        
+        
+        
+        /*
+     if (board == null || board.length != 9 ||
+            board[0].length != 9) {
+            return false;
+        }
+        
+        Set<Character> set = new HashSet<Character>();
+        
+        // check the rows.
+        for (int i = 0; i < 9; i++) {
+            // clear the set at every row.
+            set.clear();
+            for (int j = 0; j < 9; j++) {
+                if (!isValidChar(board[i][j], set)) {
+                    return false;
+                }
+            }
+        }
+        
+        // check the columns.
+        for (int i = 0; i < 9; i++) {
+            // clear the set at every column.
+            set.clear();
+            for (int j = 0; j < 9; j++) {
+                if (!isValidChar(board[j][i], set)) {
+                    return false;
+                }
+            }
+        }
+        
+        // check the blocks.
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // clear the set at every block.
+                set.clear();
+                for (int k = 0; k < 9; k++) {
+                    if (!isValidChar(board[i + k / 3][j + k % 3], set)) {
+                        return false;
+                    }    
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    private boolean isValidChar(char c, Set<Character> set) {
+        if (c == '.') {
+            return true;
+        }
+        
+        if (c < '0' || c > '9') {
+            return false;
+        }
+        
+        // Check if the character exit in the hashset.
+        if (set.contains(c)) {
+            return false;
+        }
+        
+        set.add(c);
+        
+        return true;
+    }
+    */
+}
