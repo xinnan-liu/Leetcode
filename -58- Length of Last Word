@@ -21,3 +21,13 @@ public class Solution {
         return length;
     }
 }
+
+
+/*** neat solution ***/
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        String[] parts = s.split(" ");
+        if (parts.length == 0) return 0;
+        return parts[parts.length - 1].length();
+    }
+}
