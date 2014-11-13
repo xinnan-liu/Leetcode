@@ -1,0 +1,39 @@
+public class Solution {
+    public boolean isPalindrome(String s) {
+        if(s==""){
+            return true;
+        }
+        //String t=s.replaceAll("(?i)[^a-zA-Z0-9\u4E00-\u9FA5]", "");	
+        String t=s.toLowerCase().replaceAll("(?i)[^a-zA-Z0-9\u4E00-\u9FA5]", "");	
+        int l=0;
+        int r=t.length()-1;
+        while(l<r){
+            if(t.charAt(l)==t.charAt(r)){
+                l++;
+                r--;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
+
+
+
+/*** solution ***/
+public boolean isPalindrome(String s) {
+int i = 0, j = s.length() - 1;
+while (i < j) {
+while (i < j && !Character.isLetterOrDigit(s.charAt(i))) i++;
+while (i < j && !Character.isLetterOrDigit(s.charAt(j))) j--;
+if (Character.toLowerCase(s.charAt(i))
+!= Character.toLowerCase(s.charAt(j))) {
+return false;
+}
+i++; j--;
+}
+return true;
+}
