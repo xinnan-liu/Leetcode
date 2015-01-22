@@ -1,0 +1,23 @@
+public class Solution {
+    public String convertToTitle(int n) {
+        StringBuilder result = new StringBuilder();
+
+        while(n>0){
+            n--;
+            result.insert(0, (char)('A' + n % 26));
+            n /= 26;
+        }
+        return result.toString();
+        /*
+        return result.toString();
+        
+        StringBuilder str= new StringBuilder();
+        while(n!=0){
+            int a=n%26+64;
+            char b= (char)a;
+            str.append(b);
+            
+        }
+        */
+    }
+}
