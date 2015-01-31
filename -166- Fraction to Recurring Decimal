@@ -1,0 +1,35 @@
+public class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+       StringBuilder res=new StringBuilder();
+       if(numerator==0) return "0";
+       res.append(((numerator>0)^(denominator>0))?"-":"");
+       
+        long num = Math.abs((long)numerator);
+        long den = Math.abs((long)denominator);
+
+       //integeral part
+       res.append(num/den);
+       num%=den;
+       if(num==0) return res.toString();
+       
+       //fractional part
+       res.append(".");
+       Map<Long,Integer> h=new HashMap<Long,Integer>();
+       h.put(num, res.length());
+       while(num!=0){
+           num*=10;
+           res.append(num/den);
+           num%=den;
+           if(h.containsKey(num)){
+               int index=h.get(num);
+               res.insert(index, "(");
+                res.append(")");
+                break;
+            }
+            else {
+                h.put(num, res.length());
+            }
+        }
+        return res.toString();
+           }
+       }
