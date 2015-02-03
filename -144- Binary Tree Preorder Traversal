@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+ /*** recursive ***/
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> ret=new ArrayList<Integer>();
@@ -19,5 +21,26 @@ public class Solution {
         ret.add(root.val);
         rec_preorder(root.left,ret);
         rec_preorder(root.right,ret);
+    }
+}
+
+/*** Iterative ***/
+public class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ret=new ArrayList<Integer>();
+        if(root==null) return ret;
+        Stack<TreeNode> s=new Stack<TreeNode>();
+        s.push(root);
+        while(!s.isEmpty()){
+            TreeNode cur=s.pop();
+            ret.add(cur.val);
+            if(cur.right!=null){
+                s.push(cur.right);
+            }
+            if(cur.left!=null){
+                s.push(cur.left);
+            }
+        }
+        return ret;
     }
 }
