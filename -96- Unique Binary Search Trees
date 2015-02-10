@@ -1,0 +1,19 @@
+public class Solution {
+    public int numTrees(int n) {
+        if(n==0) return 0;
+        if(n==1) return 1;
+        if(n==2) return 2;
+        int[] rec=new int[n+1];
+        rec[0]=1;
+        rec[1]=1;
+        rec[2]=2;
+        for(int i=3;i<=n;i++){
+            int tmp=0;
+            for(int k=0;k<i;k++){
+                tmp+=(rec[k]*rec[i-k-1]);
+            }
+            rec[i]=tmp;
+        }
+        return rec[n];
+    }
+}
