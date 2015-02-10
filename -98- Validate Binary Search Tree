@@ -15,4 +15,58 @@ public class Solution {
     }  
 } 
 
-/*** need iteration solution ***/
+/*** iteration solution ***/
+public class Solution {  
+    // public boolean isValidBST(TreeNode root) {  
+    //     return isBSTRec(root, Long.MIN_VALUE, Long.MAX_VALUE);  
+    // }  
+      
+    // public boolean isBSTRec(TreeNode root, long left, long right) {  
+    //     if(root == null) {  
+    //         return true;  
+    //     }  
+    //     if(root.val <= left || root.val >= right) {  
+    //         return false;  
+    //     }  
+          
+    //     return isBSTRec(root.left, left, root.val) && isBSTRec(root.right, root.val, right);  
+    // }  
+    
+    public boolean isValidBST(TreeNode root) {
+          // Just use the inOrder traversal to solve the problem.
+         if (root == null) {
+             return true;
+          }
+          
+          Stack<TreeNode> s = new Stack<TreeNode>();
+          TreeNode cur = root;
+          
+         TreeNode pre = null;
+         
+         while(true) {
+             // Push all the left node into the stack.
+             while (cur != null) {
+                 s.push(cur);
+                 cur = cur.left;
+             }
+             
+             if (s.isEmpty()) {
+                 break;
+             }
+             
+             // No left node, just deal with the current node.
+             cur = s.pop();
+             
+             if (pre != null && pre.val >= cur.val) {
+                 return false;
+             }
+            
+             pre = cur;
+            
+             // Go to the right node.
+             cur = cur.right;
+         }
+         
+         return true;
+     }
+} 
