@@ -1,0 +1,61 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    private static List<List<Integer>> ans;
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        ans=new ArrayList<List<Integer>>();
+        helper(new ArrayList<Integer>(), root, sum);
+        return ans;
+    }
+    
+    public void helper(List<Integer> l, TreeNode root, int sum){
+        if(root==null) return;
+        l.add(root.val);
+        if(root.left==null&&root.right==null&&root.val==sum){
+            ans.add(new ArrayList<Integer>(l));
+        }
+        helper(l, root.left, sum-root.val);
+        helper(l, root.right, sum-root.val);
+        l.remove(l.size()-1);
+    }
+        
+        
+        
+        
+        
+        
+        // List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        
+        // Stack<TreeNode> s=new Stack<TreeNode>();
+        // Stack<Integer> sums=new Stack<Integer>();
+        
+        // s.push(root);
+        // sums.push(sum);
+        // List<Integer> temp=new ArrayList<Integer>();
+        // while(!s.isEmpty()&&root!=null){
+        //     TreeNode head=s.pop();
+        //     int value=sums.pop();
+        //     temp.add(head.val);
+        //     if(head.left==null&&head.right==null&&head.val==value) {
+        //         ret.add(temp);
+        //         temp=new ArrayList<Integer>();
+        //     }
+        //     if(head.right!=null){
+        //         s.push(head.right);
+        //         sums.push(value-head.val);
+        //     }
+        //     if(head.left!=null){
+        //         s.push(head.left);
+        //         sums.push(value-head.val);
+        //     }
+        // }
+        // return ret;
+    
+}
