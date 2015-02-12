@@ -1,0 +1,56 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+ /*** iterative version ***/
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root==null) return 0;
+        int total=0;
+        
+        LinkedList<TreeNode> q=new LinkedList<TreeNode>();
+        LinkedList<Integer> sumq=new LinkedList<Integer>();
+        
+        q.addLast(root);
+        sumq.addLast(root.val);
+        
+        while(!q.isEmpty()&&root!=null){
+            TreeNode cur=q.poll();
+            int curval=sumq.poll();
+            if(cur.left==null&&cur.right==null){
+                total+=curval;
+            }
+            if(cur.right!=null){
+                q.addLast(cur.right);
+                sumq.addLast(curval*10+cur.right.val);
+            }
+            if(cur.left!=null){
+                q.addLast(cur.left);
+                sumq.addLast(curval*10+cur.left.val);
+            }
+        }
+        
+        return total;
+    }
+}
+
+/*** recursion version ***/
+public int sumNumbers(TreeNode root) {
+      return dfs(root, 0);
+    }
+    
+    public int dfs(TreeNode root, int pre){
+        if(root==null) return 0;
+        
+        int cur=pre*10+root.val;
+        
+        if(root.left==null&&root.right==null) return cur;
+        
+        return dfs(root.left, cur)+dfs(root.right, cur);
+    }
