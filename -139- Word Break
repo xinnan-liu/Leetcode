@@ -1,0 +1,44 @@
+public class Solution {
+    public boolean wordBreak(String s, Set<String> dict) {
+        // int flag=s.length();
+        
+        // Iterator it= dict.iterator();
+        // while(it.hasNext()){
+        //     String tmp=it.next().toString();
+        //     int length=tmp.length();
+        //     if(length>s.length()){
+        //      ;   
+        //     }else if(length==s.length()){
+        //         if(s.equals(tmp)){
+        //             return true;
+        //         }else{
+        //             ;
+        //         }
+        //     }else{
+        //         String cmp=s.substring(0,length);
+        //         if(tmp.equals(cmp)){
+        //             s=s.substring(length, s.length());
+        //             flag=s.length();
+        //             if(flag==0) return true;
+        //         }
+        //     }
+            
+        // }
+        
+        // return false;
+
+        boolean [] breakable = new boolean[s.length()+1];
+        breakable[0] = true;
+
+        for(int i=1;i<=s.length();i++){
+            for(int j=0;j<i;j++){
+                if(breakable[j]&&dict.contains(s.substring(j,i))){
+                    breakable[i] = true;
+                    break;
+                }
+            }
+        }
+        return breakable[s.length()];
+        
+    }
+}
