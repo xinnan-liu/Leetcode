@@ -1,0 +1,76 @@
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+ 
+ /*** recursive version ***/
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        // if(root==null) return;
+        
+        // if(root.left==null&&root.right==null) return;
+    
+        // LinkedList<TreeLinkNode> q=new LinkedList<TreeLinkNode>();
+        // q.addFirst(root);
+        // while(!q.isEmpty()){
+        //     int cnt=q.size();
+        //     for(int i=0;i<cnt;i++){
+        //         TreeLinkNode head=q.poll();
+        //         if(i==cnt-1){
+        //             head.next=null;
+        //         }
+        //         if(head.left!=null){
+        //             q.addLast(head.left);
+        //         }
+        //         if(head.right!=null){
+        //             q.addLast(head.right);
+        //         }
+        //         if(head.left!=null&&head.right!=null){
+        //             head.left.next=head.right;
+        //         }
+                
+        //     }
+            
+            
+        // }
+         if (root == null || root.left == null) {
+              return;
+          }
+          
+          root.left.next = root.right;
+         root.right.next = root.next == null ? null: root.next.left;
+         
+         connect(root.left);
+         connect(root.right);
+    }
+}
+
+/*** Iterative version O(1) space ***/
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root==null) return;
+        
+        TreeLinkNode leftEnd=root;
+        while(leftEnd!=null&&leftEnd.left!=null){
+            TreeLinkNode cur=leftEnd;
+            while(cur!=null){
+                cur.left.next=cur.right;
+                cur.right.next=cur.next==null? null:cur.next.left;
+                cur=cur.next;
+            }
+            leftEnd=leftEnd.left;
+        }
+    }
+}
