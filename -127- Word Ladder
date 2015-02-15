@@ -1,0 +1,38 @@
+public class Solution {
+    public int ladderLength(String start, String end, Set<String> dict) {
+        if(start==null||end==null||dict.size()==0) return 0;
+        
+        Set<String> set=new HashSet<String>();
+        Queue<String> q=new LinkedList<String>();
+        int level=1;
+        q.offer(start);
+        set.add(start);
+        
+        while(!q.isEmpty()){
+            int cnt=q.size();
+            level++;    
+            for(int i=0;i<cnt;i++){
+                String tmp=q.poll();
+                int len=tmp.length();
+                for(int j=0;j<len;j++){
+                     StringBuilder sb=new StringBuilder(tmp);
+                     for(char c='a';c<='z';c++){
+                         sb.setCharAt(j,c);
+                         String cmp=sb.toString();
+                         if(cmp.equals(end)){
+                             return level;
+                         }
+                         
+                         if(set.contains(cmp)||!dict.contains(cmp)){
+                             continue;
+                         }
+                         
+                         q.offer(cmp);
+                         set.add(cmp);
+                     }
+                }
+            }
+        }
+        return 0;
+    }
+}
