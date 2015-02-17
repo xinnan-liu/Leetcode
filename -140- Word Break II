@@ -1,0 +1,87 @@
+/*** brute force solution ***/
+/*** get Time Limited Exceed ***/
+/*** need to cut the brnch maybe ***/
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> dict) {
+        List<String> ret=new ArrayList<String>();
+        if(s==null) return ret;
+        helper(s, dict, 0, "", ret);
+        return ret;
+    }
+    
+    public void helper(String s, Set<String> dict, int index, String item, List<String> ret){
+        if(index>=s.length()){
+            ret.add(s);
+            return;
+        }
+        int len=s.length();
+        StringBuilder sb=new StringBuilder();
+        for(int i=index;i<len;i++){
+            sb.append(s.charAt(i));
+            String str=sb.toString();
+            if(dict.contains(str)){
+                String newItem=item.length()>0? item+" "+str.toString():str.toString();
+                helper(s, dict, i+1, newItem, ret);
+            }
+        }
+    }
+}
+
+
+/*** DP solution ***/
+/*** add the check array to determine whether need to continue ***/
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> dict) {
+        if(s==null||s.length()==0||dict==null){
+            return null;
+        }
+        
+        List<String> ret=new ArrayList<String>();
+        List<String> path=new ArrayList<String>();
+        boolean[] D=new boolean[s.length()+1];
+        
+        int len=s.length();
+        D[len]=true;
+        for(int i=len-1;i>=0;i--){
+            for(int j=i;j<=len-1;j++){
+                D[i]=false;
+                if(D[j+1]&&dict.contains(s.substring(i,j+1))){
+                    D[i]=true;
+                    break;
+                }
+            }
+        }
+        
+        dfs(s, dict, 0, path, ret, D);
+        return ret;
+    }
+    
+    public void dfs(String s, Set<String> dict, int index, List<String> path, List<String> ret, boolean[] check){
+        int len=s.length();
+        if(index==len){
+            StringBuilder sb=new StringBuilder();
+            for(String str: path){
+                sb.append(str);
+                sb.append(" ");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            ret.add(sb.toString());
+            return;
+        }
+        
+        if(!check[index]) {
+            return;
+        }
+        
+        for(int i=index;i<len;i++){
+            String left=s.substring(index,i+1);
+            if(!dict.contains(left)){
+                continue;
+            }
+            
+            path.add(left);
+            dfs(s, dict, i+1, path, ret, check);
+            path.remove(path.size()-1);
+        }
+    }
+}
