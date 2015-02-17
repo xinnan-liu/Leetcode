@@ -1,0 +1,27 @@
+public class Solution {
+    public List<String> anagrams(String[] strs) {
+        List<String> ret=new ArrayList<String>();
+        if(strs==null) return ret;
+        
+        Set<String> set=new HashSet<String>();
+        Map<Integer, String> map=new HashMap<Integer, String>();
+        
+        for(String s:strs){
+            char[] c=s.toCharArray();
+            Arrays.sort(c);
+            String cur=new String(c);
+            if(map.containsKey(cur.hashCode())){
+                if(!set.contains(cur)){
+                    ret.add(s);
+                    set.add(cur);
+                    ret.add(map.get(cur.hashCode()));
+                    continue;
+                }
+                ret.add(s);
+                continue;
+            }
+            map.put(cur.hashCode(),s);
+        }
+        return ret;
+    }
+}
