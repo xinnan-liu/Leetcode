@@ -10,3 +10,6 @@ public class Solution {
        return max;
     }
 }
+
+/*** need non-tricky solution ***/
+/*** bucket sort or raidx sort ***/
