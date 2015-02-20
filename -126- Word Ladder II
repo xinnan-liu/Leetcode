@@ -1,0 +1,62 @@
+public class Solution {
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        List<List<String>> ret= new ArrayList<List<String>>();
+        if(start==null||end==null||dict==null) return ret;
+        
+        Map<String,List<List<String>>> map= new HashMap<String, List<List<String>>>();
+        Map<String, List<List<String>>> tmpmap=new HashMap<String, List<List<String>>>();
+        
+        Queue<String> q= new LinkedList<String>();
+        
+        List<List<String>> liststart=new ArrayList<List<String>>();
+        List<String> path=new ArrayList<String>();
+        
+        q.offer(start);
+        path.add(start);
+        liststart.add(path);
+        
+        map.put(start,liststart);
+        
+        while(!q.isEmpty()){
+            int cnt=q.size();
+            for(int i=0;i<cnt;i++){
+                String cur=q.poll();
+                int len=cur.length();
+                for(int j=0;j<len;j++){
+                    StringBuilder sb=new StringBuilder(cur);
+                    for(char c='a';c<'z';c++){
+                        sb.setCharAt(j,c);
+                        String tmp=sb.toString();
+                        if(!dict.contains(tmp)&&!tmp.equals(end)||map.containsKey(tmp)){
+                            continue;
+                        }
+                        
+                        //get pre path
+                        List<List<String>> pre=map.get(cur);
+                        
+                        List<List<String>> curlist=tmpmap.get(tmp);
+                        if(curlist==null){
+                            curlist=new ArrayList<List<String>>();
+                            q.offer(tmp);
+                            tmpmap.put(tmp, curlist);
+                        }
+                        
+                        for(List<String> strlist: pre){
+                            List<String> strlistNew= new ArrayList<String>(strlist);
+                            strlistNew.add(tmp);
+                            curlist.add(strlistNew);
+                        }
+                    }
+                    
+                }
+            }
+            
+            if(tmpmap.containsKey(end)){
+                return tmpmap.get(end);
+            }
+            
+            map.putAll(tmpmap);
+        }
+        return ret;
+    }
+}
