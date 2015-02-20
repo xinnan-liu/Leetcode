@@ -1,0 +1,46 @@
+public class Solution {
+    public void solve(char[][] board) {
+        Queue<Integer> queue = new LinkedList<Integer>();
+    if (board == null || board.length == 0)
+      return;
+    int m = board.length;
+    int n = board[0].length;
+    boolean visited[][] = new boolean[m][n];
+    int dir[][] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+
+        //以下是标准的BFS搜索，用visitedPoints记录访问的O
+        if (board[i][j] == 'O' && !visited[i][j]) {
+          boolean surounned = true;
+          List<Integer> visitedPoints = new ArrayList<Integer>();
+          queue.add(i * n + j);
+          visited[i][j] = true;
+          while (queue.size() > 0) {
+            int point = queue.poll();
+            visitedPoints.add(point);
+            int x = point/n;
+            int y = point%n;
+            for (int k = 0; k < 4; k++) {
+              int nextx = x + dir[k][0];
+              int nexty = y + dir[k][1];
+              if (nextx >= 0 && nextx < m && nexty >= 0 && nexty < n) {
+                if (board[nextx][nexty] == 'O' && !visited[nextx][nexty])
+                  queue.add(nextx * n + nexty);
+                visited[nextx][nexty] = true;
+              } else {
+                surounned = false;
+              }
+            }
+          }
+
+          //如果当前遍历到的O是被包围的
+          if (surounned) {
+            for (int p : visitedPoints)
+              board[p / n][p % n] = 'X';
+          }
+        }
+      }
+    }
+    }
+}
