@@ -1,0 +1,46 @@
+/*** NON-DP recursion solution ***/
+public class Solution {
+    public int numDistinct(String S, String T) {
+        int lenS=S.length();
+        int lenT=T.length();
+        
+        int[][] memory= new int[lenS+1][lenT+1];
+        for(int i=0;i<=lenS;i++){
+            for(int j=0;j<=lenT;j++){
+                memory[i][j]=-1;
+            }
+        }
+        
+        return rec(S, T, 0, 0, memory);
+    }
+    
+    public int rec(String S, String T, int indexS, int indexT, int[][] m){
+        int lenS=S.length();
+        int lenT=T.length();
+        //T is null string
+        if(indexT>=lenT){
+            return 1;
+        }
+        //S is null string
+        if(indexS>=lenS){
+            return 0;
+        }
+        
+        if(m[indexS][indexT]!=-1){
+            return m[indexS][indexT];
+        }
+        
+        int sum=0;
+        for(int i=indexS;i<lenS;i++){
+            if(S.charAt(i)==T.charAt(indexT)){
+                sum+=rec(S, T, i+1, indexT+1, m);
+            }
+        }
+        
+        m[indexS][indexT]=sum;
+        return sum;
+    }
+}
+
+
+/*** DP solution ***/
