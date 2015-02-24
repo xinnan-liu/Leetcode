@@ -1,0 +1,51 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if(s==null||p==null) return false;
+        int lenS=s.length();
+        int lenP=p.length();
+        
+        int indexS=0;
+        int indexP=0;
+        
+        int preS=0;
+        int preP=0;
+        boolean back=false;
+        
+        while(indexS<lenS){
+            if(indexP<lenP&&isMatch(s.charAt(indexS), p.charAt(indexP))){
+                indexS++;
+                indexP++;
+            }else if(indexP<lenP&&p.charAt(indexP)=='*'){
+                while(indexP<lenP&&p.charAt(indexP)=='*'){
+                    indexP++;
+                }
+                if(indexP==lenP){
+                    return true;
+                }
+                back=true;
+                preS=indexS;
+                preP=indexP;
+            }else if(back){
+                indexS=++preS;
+                indexP=preP;
+            }else{
+                return false;
+            }
+        }
+        
+        while(indexP<lenP&&p.charAt(indexP)=='*'){
+            indexP++;
+        }
+        
+        if(indexS==lenS&&indexP==lenP){
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean isMatch(char c, char p){
+        if(p=='?'||p==c) return true;
+        return false;
+    }
+}
