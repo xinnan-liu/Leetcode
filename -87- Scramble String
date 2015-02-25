@@ -1,0 +1,33 @@
+public class Solution {
+    public boolean isScramble(String s1, String s2) {
+        int len=s1.length();
+        if(len==1){
+            return s1.equals(s2);
+        }
+        
+        char[] s1Char=s1.toCharArray();
+        Arrays.sort(s1Char);
+        String s1New=new String(s1Char);
+        
+        char[] s2Char=s2.toCharArray();
+        Arrays.sort(s2Char);
+        String s2New=new String(s2Char);
+        
+        if(!s1New.equals(s2New)){
+            return false;
+        }
+        
+        for(int i=1;i<len;i++){
+            if(isScramble(s1.substring(0,i), s2.substring(0,i))&&
+                isScramble(s1.substring(i,len), s2.substring(i,len))){
+                    return true;
+            }else if(isScramble(s1.substring(0,i), s2.substring(len-i,len))&&
+                isScramble(s1.substring(i,len), s2.substring(0,len-i))){
+                    return true;
+                }
+        }
+        
+        return false;
+        
+    }
+}
