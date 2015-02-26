@@ -1,0 +1,63 @@
+public class Solution {
+    public List<String[]> solveNQueens(int n) {
+        List<String[]> ret=new ArrayList<String[]>();
+        
+        if(n==0) return ret;
+        
+        dfs(n, new ArrayList<Integer>(), ret);
+        return ret;
+    }
+    
+    public String[] createSolution(List<Integer> path){
+        int size=path.size();
+        
+        String[] ret=new String[size];
+        
+        for(int i=0;i<size;i++){
+            StringBuilder sb=new StringBuilder();
+            for(int j=0;j<size;j++){
+                if(j==path.get(i)){
+                    sb.append("Q");
+                }else{
+                    sb.append(".");
+                }
+            }
+            ret[i]=sb.toString();
+        }
+        return ret;
+    }
+    
+    public void dfs(int n, List<Integer> path, List<String[]> ret){
+        int size=path.size();
+        if(n==size){
+            String[] res=createSolution(path);
+            ret.add(res);
+            return;
+        }
+        
+        for(int i=0;i<n;i++){
+            if(!isValid(path, i)){
+                continue;
+            }
+            path.add(i);
+            dfs(n, path, ret);
+            path.remove(path.size()-1);
+        }
+    }
+    
+    public boolean isValid(List<Integer> path, int index){
+        int size=path.size();
+        
+        for(int i=0;i<size;i++){
+            if(path.get(i)==index){
+                return false;
+            }
+            
+            if(size-i==Math.abs(path.get(i)-index)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
