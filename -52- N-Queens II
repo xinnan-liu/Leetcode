@@ -1,0 +1,40 @@
+public class Solution {
+    public int totalNQueens(int n) {
+        if(n==0) return 0;
+        return dfs(n, new ArrayList<Integer>(), 0);
+
+    }
+    
+    public int dfs(int n, List<Integer> path, int row){
+        if(row==n){
+            return 1;
+        }
+        
+        int num=0;
+        
+        for(int i=0;i<n;i++){
+            if(!isValid(path, i)){
+                continue;
+            }
+            path.add(i);
+            num+=dfs(n, path, row+1);
+            path.remove(path.size()-1);
+        }
+        return num;
+    }
+    
+    public boolean isValid(List<Integer> path, int index){
+        int size=path.size();
+        for(int i=0;i<size;i++){
+            if(path.get(i)==index){
+                return false;
+            }
+            
+            if(size-i==Math.abs(path.get(i)-index)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
