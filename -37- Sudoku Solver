@@ -1,0 +1,61 @@
+public class Solution {
+    public void solveSudoku(char[][] board) {
+        dfs(board, 0, 0);
+    }
+    
+    public boolean dfs(char[][] c, int x, int y){
+        if(y==9){
+            y=0;
+            x++;
+        }
+        
+        if(x>=9){
+            return true;
+        }
+        
+        //skip non-blank 
+        if(c[x][y]!='.'){
+            return dfs(c, x, y+1);
+        }
+        
+        //set the block
+        for(int k=0;k<9;k++){
+            c[x][y]=(char)('1'+k);
+            if(isValid(c, x, y)&& dfs(c, x, y+1)){
+               return true; 
+            }
+            c[x][y]='.';
+        }
+        
+        return false;
+    }
+    
+    public boolean isValid(char[][]c, int x, int y){
+        for(int i=0;i<9;i++){
+            if(i!=y&&c[x][i]==c[x][y]){
+                return false;
+            }
+        }
+        
+        for(int i=0;i<9;i++){
+            if(i!=x&&c[i][y]==c[x][y]){
+                return false;
+            }
+        }
+        
+        int i = x / 3 * 3;
+        int j = y / 3 * 3;
+        for (int k = 0; k < 9; k++) {
+            int xIndex = i + k / 3;
+            int yIndex = j + k % 3;
+            if (xIndex == x && yIndex == y) {
+                continue;
+            }
+            
+            if (c[xIndex][yIndex] == c[x][y]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
