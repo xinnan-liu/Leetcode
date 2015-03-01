@@ -1,0 +1,82 @@
+/*** solution 1 using dfs similar to problem I ***/
+/*** get TLE problem ***/
+public class Solution {
+    public int minCut(String s) {
+        List<List<String>> ret=new ArrayList<List<String>>();
+        
+        if(s==null||s.length()==0) return 0;
+        
+        dfs(s, 0, new ArrayList<String>(), ret);
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i<ret.size();i++){
+            int size=ret.get(i).size();
+            min=Math.min(min, size);
+        }
+        return min;
+    }
+    
+    public void dfs(String s, int index, List<String> l, List<List<String>> ret){
+        int len=s.length();
+        if(index==len){
+            ret.add(new ArrayList<String>(l));//need to new an object
+            return;
+        }
+        
+        for(int i=index;i<len;i++){
+            String sub=s.substring(index, i+1);
+            if(!isPalin(sub)){
+              continue;
+            }
+            l.add(sub);
+            dfs(s, i+1, l, ret);
+            l.remove(l.size()-1);
+        }
+        
+        
+    }
+    
+    public boolean isPalin(String s){
+        if(s==null||s.length()==0){
+            return true;
+        }
+        int len=s.length();
+        int l=0;
+        int r=len-1;
+        while(l<r){
+            if(s.charAt(l)==s.charAt(r)){
+                l++;
+                r--;
+            }
+            return false;
+        }
+        return true;
+    }
+}
+
+/*** solution 2 with DP ***/
+public int minCut(String s) {
+        if(s.length()==0||s==null) return 0;
+        
+        int len=s.length();
+        int[] D=new int[len+1];
+        D[0]=-1;
+        
+        boolean[][] p=new boolean[len][len];
+        
+        for(int i=1;i<=len;i++){
+            D[i]=i-1;
+            for(int j=0;j<=i-1;j++){
+                p[j][i-1]=false;
+                //if palindrome should satisy the following condition
+                //P[i][j] = str[i] == str[j] && P[i+1][j-1];
+                if(s.charAt(j)==s.charAt(i-1)&&(i-1-j<=2||p[j+1][i-2])){
+                    p[j][i-1]=true;
+                    D[i]=Math.min(D[i], D[j]+1);
+                }
+            }
+        }
+        
+        return D[len];
+        
+  
+    }
