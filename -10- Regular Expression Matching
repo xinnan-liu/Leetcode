@@ -1,0 +1,46 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if(s==null||p==null) return false;
+        return dfs(s, p, 0, 0);   
+    }
+    
+    public boolean dfs(String s, String p, int indexS, int indexP){
+        int lenS=s.length();
+        int lenP=p.length();
+        
+        //base
+        if(indexP>=lenP){
+            return indexS>=lenS;
+        }
+        
+        //first case: next is *
+        if(indexP!=lenP-1&&p.charAt(indexP+1)=='*'){
+            if(dfs(s, p, indexS, indexP+2)){
+                return true;
+            }
+            for(int i=indexS;i<lenS;i++){
+                if(!isSame(s.charAt(i), p.charAt(indexP))){
+                    return false;
+                }
+                if(dfs(s, p, i+1, indexP+2)){
+                    return true;
+                }
+            }
+            
+            return false;
+        }else{
+            //second case:
+            if(indexS>=lenS){
+                return false;
+            }
+            if(!isSame(s.charAt(indexS), p.charAt(indexP))){
+                return false;
+            }
+            return dfs(s, p, indexS+1, indexP+1);
+        }
+    }
+    
+    public boolean isSame(char c, char p){
+        return p=='.'||c==p;
+    }
+}
