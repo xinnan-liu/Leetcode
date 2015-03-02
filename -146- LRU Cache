@@ -1,0 +1,82 @@
+public class LRUCache {
+    private class Dlink{
+        int val;
+        int key;
+        Dlink pre;
+        Dlink next;
+        Dlink(int key, int val){
+            this.key=key;
+            this.val=val;
+            pre=null;
+            next=null;
+        }
+    }
+    
+    Dlink head;
+    Dlink tail;
+    
+    int capacity;
+    HashMap<Integer, Dlink> map;
+    
+    public void removeFirst(){
+        removeNode(head.next);
+    }
+    
+    public void removeNode(Dlink node){
+        node.pre.next=node.next;
+        node.next.pre=node.pre;
+    }
+    
+    public void addtoTail(Dlink node){
+        tail.pre.next=node;
+        node.pre=tail.pre;
+        node.next=tail;
+        tail.pre=node;
+    }
+    
+    public LRUCache(int capacity) {
+        map=new HashMap<Integer, Dlink>();
+        
+        //do not forget to initial
+        head=new Dlink(-1, -1);
+        tail=new Dlink(-1, -1);
+        head.next=tail;
+        tail.pre=head;
+        this.capacity=capacity;
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)){
+            return -1;
+        }
+        //target 
+        //need to move to tail 
+        Dlink node=map.get(key);
+        removeNode(node);
+        addtoTail(node);
+        
+        return node.val;
+        
+    }
+    
+    public void set(int key, int value) {
+        Dlink node=map.get(key);
+        
+        //bug1: need to determine the condition of node
+        if(node==null){
+            node=new Dlink(key, value);
+            map.put(key, node);
+        }else{
+            node.val=value;
+            map.put(key, node);
+            removeNode(node);
+        }
+        
+        addtoTail(node);
+        
+        if(map.size()>this.capacity){
+            map.remove(head.next.key);
+            removeFirst();
+        }
+    }
+}
