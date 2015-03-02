@@ -1,0 +1,42 @@
+public class Solution {
+    public List<Integer> findSubstring(String S, String[] L) {
+        List<Integer> ret=new ArrayList<Integer>();
+        Map<String, Integer> map=new HashMap<String, Integer>();
+        Map<String, Integer> found=new HashMap<String, Integer>();
+        
+        if(S==null||L==null||L.length==0) return ret;
+        
+        int slen=S.length();
+        int len=L.length;
+        int Llen=L[0].length();
+        
+        for(String s: L){
+            if(map.containsKey(s)){
+                map.put(s, map.get(s)+1);
+            }else{
+                map.put(s, 1);
+            }
+        }
+        
+        for(int i=0;i<=slen-Llen*len;i++){
+            found=new HashMap<String, Integer>(map);
+            for(int j=i;j<=slen-Llen;j+=Llen){
+                String sub=S.substring(j, j+Llen);
+                if(found.containsKey(sub)){
+                    found.put(sub, found.get(sub)-1);
+                    
+                    if(found.get(sub)==0){
+                        found.remove(sub);
+                    }
+                }else{
+                    break;
+                }
+                
+                if(found.isEmpty()){
+                    ret.add(i);
+                }
+            }
+        }
+        return ret;
+    }
+}
