@@ -1,0 +1,75 @@
+public class Solution {
+    public List<String> fullJustify(String[] words, int L) {
+        List<String> ret=new ArrayList<String>();
+        if(words==null) return ret;
+        
+        rec(words, L, 0, ret);
+        return ret;
+    }
+    
+    public void rec(String[] words, int L, int index, List<String> list){
+        int len=words.length;
+        if(index>=len){
+            return;
+        }
+        
+        int tmpL=L;
+        int end=index;
+        for(int i=index;i<len&&words[i].length()<=L;i++){
+            L-=words[i].length();
+            L--;
+            end=i;
+        }
+        
+        //add the last space
+        L++;
+        
+        int num=end-index+1;//count the words in one line
+        
+        int extraSpace=0;
+        int firstSpace=0;
+        
+        if(num>1){
+            extraSpace=L/(num-1);//space after the words
+            firstSpace=L%(num-1);//space after the fist word           
+        }
+        
+        StringBuilder sb=new StringBuilder();
+        for(int i=index;i<=end;i++){
+            sb.append(words[i]);
+            if(i!=end){
+                sb.append(' ');
+            }
+            
+            if(end!=len-1){
+                if(firstSpace>0){
+                    sb.append(' ');
+                    firstSpace--;
+                }
+                
+                if(i==end){
+                    break;
+                }
+                
+                int cnt=extraSpace;
+                while(cnt>0){
+                    sb.append(' ');
+                    cnt--;
+                }
+            }
+        }
+        
+        //the last line
+        int tailSpace=tmpL-sb.length();
+        while(tailSpace>0){
+            sb.append(' ');
+                tailSpace--;
+        }
+            
+        
+        String ret=sb.toString();
+        list.add(ret);
+        rec(words, tmpL, end+1, list);
+        
+    }
+}
