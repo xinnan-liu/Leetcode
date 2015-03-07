@@ -29,3 +29,30 @@ public class Solution {
         return;        
     }
 }
+
+
+redo:
+public class Solution {
+    public void merge(int A[], int m, int B[], int n) {
+        int cur=m+n-1;
+        
+        int pA=m-1;
+        int pB=n-1;
+        
+        while(cur!=0){
+            //bug 1: when pA||pB less than zero, should break!
+            if(pA<0||pB<0){
+                break;
+            }
+            
+            if(A[pA]>B[pB]){
+                A[cur]=A[pA--];
+            }else{
+                A[cur]=B[pB--];
+            }
+            cur--;
+        }
+        
+        System.arraycopy(B, 0, A, 0, pB+1);
+    }
+}
