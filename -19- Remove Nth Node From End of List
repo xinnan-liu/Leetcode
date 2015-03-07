@@ -56,6 +56,7 @@ public class Solution {
             n--;
         }
         
+        //bug 1: return slow.next, not null!
         if(fast==null) return slow.next;
         
         while(fast.next!=null){
