@@ -6,3 +6,36 @@ public class Solution {
         return result;
     }
 }
+
+
+
+redo:
+public class Solution {
+    public int reverse(int x) {
+        int sum=0;
+        boolean carry=false;
+        if(x<0){
+            carry=true;
+            x=-1*x;
+        }
+        while(x>0){
+            int cur=x%10;
+            sum=sum*10+cur;
+            x/=10;
+        }
+        if(carry) return -1*sum;
+        return sum;
+    }
+}
+
+public class Solution {
+    public int reverse(int x) {
+        int sum=0;
+        while(x!=0){
+            int cur=x%10;
+            sum=sum*10+cur;
+            x/=10;
+        }
+        return sum;
+    }
+}
