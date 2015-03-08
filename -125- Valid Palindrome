@@ -37,3 +37,37 @@ i++; j--;
 }
 return true;
 }
+
+
+redo:
+public class Solution {
+    public boolean isPalindrome(String s) {
+        if(s.length()==0||s==null) return true;
+        String cmp=s.toLowerCase();
+        int l=0;
+        int r=cmp.length()-1;
+        while(l<r){
+            //bug 1: need add condition "while l<r"
+            while(l<r&&!isNumChar(cmp.charAt(l))){
+                l++;
+            }
+            
+            while(l<r&&!isNumChar(cmp.charAt(r))){
+                r--;
+            }
+            if(cmp.charAt(l)!=cmp.charAt(r)){
+                return false;
+            }
+            l++;
+            r--;
+        }
+        return true;
+    }
+    
+    public boolean isNumChar(char c){
+        if(c<='9'&&c>='0'||c<='z'&&c>='a'){
+            return true;
+        }
+        return false;
+    }
+}
