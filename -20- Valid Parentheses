@@ -33,3 +33,33 @@ public class Solution {
         return false;
     }
 }
+
+
+
+
+redo:
+public class Solution {
+    public boolean isValid(String s) {
+        if(s==null) return false;
+        Stack<Character> st=new Stack<Character>();
+        
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            if(c=='('||c=='['||c=='{'){
+                st.push(s.charAt(i));
+            }else{
+                if(st.isEmpty()) return false;
+                char cmp=st.pop();
+                if(cmp=='('&&s.charAt(i)==')'||
+                   cmp=='['&&s.charAt(i)==']'||
+                   cmp=='{'&&s.charAt(i)=='}'){
+                       continue;
+                   }else{
+                       return false;
+                   }
+            }
+        }
+        if(st.isEmpty()) return true;
+        return false;
+    }
+}
