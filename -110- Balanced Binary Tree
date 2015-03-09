@@ -19,3 +19,32 @@ public class Solution {
         return Math.max(getDepth(root.left),getDepth(root.right))+1;
     }
 }
+
+
+
+redo:
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null) return true;
+        int diff=Math.abs(getLen(root.left)-getLen(root.right));
+        if(diff>1) return false;
+        return isBalanced(root.left)&&isBalanced(root.right);
+    }
+
+    public int getLen(TreeNode root){
+        if(root==null) return 0;
+        //if(root.left==null&&root.right==null) return 1;
+        return Math.max(getLen(root.left), getLen(root.right))+1;
+    }
+}
+
+
