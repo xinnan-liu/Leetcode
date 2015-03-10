@@ -31,3 +31,41 @@ public class Solution {
         return rst;
     }
 }
+
+
+
+redo:
+public class Solution {
+    public String addBinary(String a, String b) {
+        StringBuilder sb=new StringBuilder();
+        if(a==null&&b==null) return null;
+        if(a.length()==0) return b;
+        if(b.length()==0) return a;
+        
+        int pa=a.length()-1;
+        int pb=b.length()-1;
+        int carry=0;
+        while(pa>=0||pb>=0){
+            //caution!!!!
+            int sum=carry;
+            
+            if(pa>=0){
+                sum+=a.charAt(pa)-'0';
+            }
+            if(pb>=0){
+                sum+=b.charAt(pb)-'0';
+            }
+            
+            String s=sum%2==0? "0":"1";
+            sb.insert(0, s);
+            carry=sum/2;
+            //bug 1: forget to handle pointer
+            pa--;
+            pb--;
+        }
+        if(carry==1){
+            sb.insert(0,"1");
+        }
+        return sb.toString();
+    }
+}
