@@ -1,0 +1,71 @@
+/*** recursive solution ***/
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null) return true;
+        return helper(root, root);
+    }
+    
+    public boolean helper(TreeNode root1, TreeNode root2){
+        if(root1==null&&root2==null){
+            return true;
+        }else if(root1==null||root2==null){
+            return false;
+        }
+        return root1.val==root2.val&&helper(root1.left, root2.right)&&helper(root1.right, root2.left);
+    }
+}
+
+
+
+/*** iterative solution ***/
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null) return true;
+        
+        Stack<TreeNode> s1=new Stack<TreeNode>();
+        Stack<TreeNode> s2=new Stack<TreeNode>();
+        
+        s1.push(root);
+        s2.push(root);
+        
+        while(!s1.isEmpty()&&!s2.isEmpty()){
+            TreeNode cur1=s1.pop();
+            TreeNode cur2=s2.pop();
+            if(cur1.val!=cur2.val) return false;
+            
+            if(cur1.left!=null&&cur2.right!=null){
+                s1.push(cur1.left);
+                s2.push(cur2.right);
+            }else if(!(cur1.left==null&&cur2.right==null)){
+                return false;
+            }
+            
+            if(cur1.right!=null&&cur2.left!=null){
+                s1.push(cur1.right);
+                s2.push(cur2.left);
+            }else if(!(cur1.right==null&&cur2.left==null)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
