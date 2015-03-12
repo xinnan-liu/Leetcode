@@ -14,3 +14,80 @@ public class Solution {
         return num[left];  
     }
 }
+
+redo:
+public class Solution {
+    public int findMin(int[] num) {
+        int len=num.length;
+        if(num==null) return 0;
+        if(len==1) return num[0];
+        for(int i=1;i<len;i++){
+            if(num[i]>num[i-1]){
+                continue;
+            }
+            return num[i];
+        }
+        return num[0];
+    }
+}
+
+
+public class Solution {
+    public int findMin(int[] num) {
+        int len=num.length;
+        if(len==0||num==null) return -1;
+        if(len==1) return num[0];
+        if(len==2) return Math.min(num[0],num[1]);
+        int l=0;
+        int r=len-1;
+        while(l<r-1){
+            int mid=l+(r-l)/2;
+            if(num[mid]>num[l]&&num[mid]<num[r]){
+                return num[0];
+            }
+            if(num[mid]>num[l]){
+                l=mid;
+            }else{
+                r=mid;
+            }
+        }
+        return num[r];
+    }
+}
+
+public class Solution {
+    public int findMin(int[] num) {
+        if(num==null||num.length==0) return 0;
+        int l=0;
+        int r=num.length-1;
+        while(l<r-1){
+            int mid=l+(r-l)/2;
+            if(num[mid]<num[r]){
+                r=mid;
+            }else{
+                l=mid;
+            }
+        }
+        return Math.min(num[l], num[r]);
+    }
+}
+
+public class Solution {
+    public int findMin(int[] num) {
+        if(num==null||num.length==0) return 0;
+        int l=0;
+        int r=num.length-1;
+        if(num[l]<num[r]){
+            return num[l];
+        }
+        while(l<r-1){
+            int mid=l+(r-l)/2;
+            if(num[mid]<num[r]){
+                r=mid;
+            }else{
+                l=mid;
+            }
+        }
+        return Math.min(num[l], num[r]);
+    }
+}
