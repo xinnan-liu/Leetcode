@@ -34,3 +34,39 @@ class MinStack {
         return min;
     }
 }
+
+
+
+
+
+redo:
+class MinStack {
+    
+    Stack<Integer> elem=new Stack<Integer>();
+    Stack<Integer> min=new Stack<Integer>();
+    public void push(int x) {
+        elem.push(x);
+        if(min.isEmpty()||x<=min.peek()){
+            min.push(x);
+        }
+    }
+ 
+    public void pop() {
+        if(elem.isEmpty()){
+            return;
+        }
+        //should be equals!!!
+        if(elem.peek().equals(min.peek())){
+            min.pop();
+        }
+        elem.pop();
+    }
+ 
+    public int top() {
+        return elem.peek();
+    }
+ 
+    public int getMin() {
+        return min.peek();
+    }
+}
