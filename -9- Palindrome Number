@@ -14,3 +14,50 @@ public class Solution {
        return false;
     }
 }
+
+
+
+redo:
+public class Solution {
+    public boolean isPalindrome(int x) {
+        if(x<0) return false;
+        int cmp=x;
+        int tar=0;
+        while(x!=0){
+            tar=tar*10+x%10;
+            x/=10;
+        }
+        if(tar==cmp){
+            return true;
+        }
+        return false;
+    }
+}
+
+public class Solution {
+    public boolean isPalindrome(int x) {
+        if(x<0) return false;
+        String cmp=String.valueOf(x);
+        int l=0;
+        //bug 1: r should be length()-1
+        int r=cmp.length()-1;
+        while(l<r){
+            if(cmp.charAt(l)!=cmp.charAt(r)){
+                return false;
+            }
+            l++;
+            r--;
+        }
+        return true;
+    }
+}
+
+public boolean isPalindrome(int x) {
+    if (x<0 || (x!=0 && x%10==0)) return false;
+    int rev = 0;
+    while (x>rev){
+        rev = rev*10 + x%10;
+        x = x/10;
+    }
+    return (x==rev || x==rev/10);
+}
