@@ -17,3 +17,24 @@ public class Solution {
         return sb.length() == 0 ? "" : sb.substring(0, sb.length() - 1);
     }
 }
+
+
+
+
+redo:
+public class Solution {
+    public String reverseWords(String s) {
+        if(s==null) return null;
+        String sNew=s.trim();
+        String[] str=sNew.split("\\s+");
+        int len=str.length;
+        StringBuilder sb=new StringBuilder();
+        for(int i=len-1;i>=0;i--){
+            sb.append(str[i]);
+            if(i>0){
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+}
