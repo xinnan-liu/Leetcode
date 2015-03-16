@@ -49,3 +49,66 @@ public class Solution {
         return res;
     }
 }
+
+
+
+redo:
+/*** recursion ***/
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ret=new ArrayList<Integer>();
+        if(root==null) return ret;
+        helper(root, ret);
+        return ret;
+    }
+    
+    public void helper(TreeNode root, List<Integer> l){
+        if(root==null) return;
+        helper(root.left, l);
+        //bug 1: should be val
+        l.add(root.val);
+        helper(root.right, l);
+    }
+}
+
+/*** iteration ***/
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ret=new ArrayList<Integer>();
+        if(root==null) return ret;
+        Stack<TreeNode> s=new Stack<TreeNode>();
+        TreeNode cur=root;
+        while(true){
+            while(cur!=null){
+                s.push(cur);
+                cur=cur.left;
+            }
+            if(s.isEmpty()){
+                break;
+            }
+            cur=s.pop();
+            ret.add(cur.val);
+           
+            cur=cur.right;
+        }
+        return ret;
+    }
+}
