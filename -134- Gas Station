@@ -22,3 +22,27 @@ public class Solution {
         return startindex;
     }
 }
+
+
+redo:
+public class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        if(gas==null||cost==null) return -1;
+        int startIndex=0;
+        int total=0;
+        int sum=0;
+        int len=cost.length;
+        for(int i=0;i<len;i++){
+            int diff=gas[i]-cost[i];
+            sum+=diff;
+            if(sum<0){
+                //bug 1: should be i+1 not ++
+                startIndex=i+1;
+                sum=0;
+            }
+            total+=diff;
+        }
+        if(total<0) return -1;
+        return startIndex;
+    }
+}
