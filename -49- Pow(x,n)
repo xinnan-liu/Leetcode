@@ -16,3 +16,47 @@ public class Solution {
         return n < 0 ? 1 / pow_positive(x, -n) : pow_positive(x, n);  
     }  
 }
+
+redo:
+/*** wrong answer ***/
+public class Solution {
+    public double pow(double x, int n) {
+        if(n==0) return 1;
+        if(n==1) return x;
+        if(n==-1) return 1/x;
+        double tmp=0;
+        double ret=1;
+        boolean flag=false;
+        boolean check=false;
+        if(n<0) {
+            check=true;
+            n=-1*n;
+        }
+        if(n%2==1) flag=true;
+        //bug 1: ignore the negative numbers
+        while(n>1){
+            tmp=x*x;
+            ret*=tmp;
+            n/=2;
+        }
+        if(flag) return check? 1/(ret*x): ret*x;
+        return check? 1/ret: ret;
+    }
+}
+
+public class Solution {
+    public double helper(double x, int n) {
+        if(n==0) {
+            return 1;
+        }else if(n==1) {
+            return x;
+        }else{
+            double t=pow(x, n/2);
+            return t*t*((n&1)==0? 1:x);
+        }   
+    }
+    
+    public double pow(double x, int n){
+        return n<0? 1/helper(x, -n): helper(x,n);
+    }
+}
