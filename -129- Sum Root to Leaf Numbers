@@ -54,3 +54,75 @@ public int sumNumbers(TreeNode root) {
         
         return dfs(root.left, cur)+dfs(root.right, cur);
     }
+    
+    
+    
+    
+    
+    
+ redo:
+ /*** recursion ***/
+ /**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root==null) return 0;
+        return dfs(root, 0);
+    }
+    
+    public int dfs(TreeNode root, int pre){
+        if(root==null) return 0;
+        int sum=pre*10+root.val;
+        
+        if(root.left==null&&root.right==null) return sum;
+        return dfs(root.left, sum)+dfs(root.right, sum);
+    }
+}
+
+
+/*** iteration ***/
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root==null) return 0;
+        
+        LinkedList<TreeNode> l=new LinkedList<TreeNode>();
+        LinkedList<Integer> suml=new LinkedList<Integer>();
+        
+        l.addLast(root);
+        suml.addLast(root.val);
+        int total=0;
+        
+        while(!l.isEmpty()&&root!=null){
+            TreeNode cur=l.poll();
+            int curval=suml.poll();
+            if(cur.left==null&&cur.right==null){
+                total+=curval;
+            }
+            if(cur.right!=null){
+                l.addLast(cur.right);
+                suml.addLast(curval*10+cur.right.val);
+            }
+            if(cur.left!=null){
+                l.addLast(cur.left);
+                suml.addLast(curval*10+cur.left.val);
+            }
+        }
+        return total;
+    }
+}
