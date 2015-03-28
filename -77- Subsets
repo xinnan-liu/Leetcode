@@ -31,4 +31,28 @@ public class Solution {
         */
     }
 }
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> subsets(int[] S) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(S==null) return ret;
+        
+        Arrays.sort(S);
+        
+        dfs(0, new ArrayList<Integer>(), S, ret);
+        return ret;
+    }
+    
+    public void dfs(int n, List<Integer> l, int[] S, List<List<Integer>> ret){
+        ret.add(new ArrayList<Integer>(l));
+        
+        for(int i=n;i<S.length;i++){
+            l.add(S[i]);
+            dfs(i+1, l, S, ret);
+            l.remove(l.size()-1);
+        }
+    }
+}
            
