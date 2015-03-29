@@ -1,0 +1,31 @@
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] num, int target) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(num==null) return ret;
+        Arrays.sort(num);
+        boolean[] visit=new boolean[num.length];
+        helper(0, num, target, new ArrayList<Integer>(), ret, visit);
+        return ret;
+    }
+    
+    public void helper(int n, int[] num, int target, List<Integer> l, List<List<Integer>> ret, boolean[] visit){
+        if(target==0&&(!ret.contains(l))){
+            //ret.add(l);
+            ret.add(new ArrayList<Integer>(l));
+            return;
+        }
+        if(target<0) return;
+        for(int i=n;i<num.length;i++){
+            if(i>0&&num[i]==num[i-1]&&!visit[i-1]){
+                continue;
+            }
+            l.add(num[i]);
+            visit[i]=true;
+            //Each number in C may only be used once in the combination.
+            //bug 1: should be 'i+1'
+            helper(i+1, num, target-num[i], l, ret, visit);
+            l.remove(l.size()-1);
+            visit[i]=false;
+        }
+    }
+}
