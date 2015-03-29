@@ -29,3 +29,32 @@ public class Solution {
         }
     }
 }
+
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> permute(int[] num) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(num==null) return ret;
+        
+        helper(new ArrayList<Integer>(), num, ret);
+        return ret;
+    }
+    
+    public void helper(List<Integer> l, int[] num, List<List<Integer>> ret){
+        if(l.size()==num.length) {
+            ret.add(new ArrayList<Integer>(l));
+            return;
+        }
+        
+        for(int i=0;i<num.length;i++){
+            if(l.contains(num[i])){
+               continue; 
+            }
+            l.add(num[i]);
+            dfs(l, num, ret);
+            l.remove(l.size()-1);
+        }
+    }
+}
