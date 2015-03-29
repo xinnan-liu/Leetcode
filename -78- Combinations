@@ -34,3 +34,28 @@ public class Solution {
         }
     }
 }
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(n<k) return ret;
+        helper(1, k, n, new ArrayList<Integer>(), ret);
+        return ret;
+    }
+    
+    public void helper(int index, int k, int n, List<Integer> l, List<List<Integer>> ret){
+        if(l.size()==k){
+            ret.add(new ArrayList<Integer>(l));
+            return;
+        }
+        //bug 1: should be 'i<=n'
+        //to be more efficient, the terminate condition should be 'i<=n-k+1'
+        for(int i=index;i<=n;i++){
+            l.add(i);
+            helper(i+1, k, n, l, ret);
+            l.remove(l.size()-1);
+        }
+    }
+}
