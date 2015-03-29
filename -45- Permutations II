@@ -34,3 +34,37 @@ public void doPermutation(int[] num) {
     }
 } 
 }
+
+
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> permuteUnique(int[] num) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(num==null) return ret;
+        boolean[] visit=new boolean[num.length];
+        //bug 1: in order to deal with duplicate, we should sort it
+        Arrays.sort(num);
+        helper(ret, new ArrayList<Integer>(), visit, num);
+        return ret;
+    }
+    
+    public void helper(List<List<Integer>> ret, List<Integer> l, boolean[] visit, int[] num){
+        if(l.size()==num.length){
+            ret.add(new ArrayList<Integer>(l));
+            return;
+        }
+        
+        for(int i=0;i<num.length;i++){
+            if(visit[i]||(i!=0&&!visit[i-1]&&num[i]==num[i-1])){
+                continue;
+            }
+            visit[i]=true;
+            l.add(num[i]);
+            helper(ret, l, visit, num);
+            l.remove(l.size()-1);
+            visit[i]=false;
+        }
+    }
+}
