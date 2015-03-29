@@ -36,3 +36,30 @@ public class Solution {
     }
 
 }
+
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(candidates==null) return ret;
+        Arrays.sort(candidates);
+        helper(0, candidates, target, new ArrayList<Integer>(), ret);
+        return ret;
+    }
+    
+    public void helper(int n, int[] candidates, int target, List<Integer> l, List<List<Integer>> ret){
+        if(target==0&&(!ret.contains(l))){
+            //ret.add(l);
+            ret.add(new ArrayList<Integer>(l));
+            return;
+        }
+        if(target<0) return;
+        for(int i=n;i<candidates.length;i++){
+            l.add(candidates[i]);
+            helper(i, candidates, target-candidates[i], l, ret);
+            l.remove(l.size()-1);
+        }
+    }
+}
