@@ -80,3 +80,60 @@ public class Solution {
         */
     }
 }
+
+
+
+redo:
+public class Solution {
+    public int[] searchRange(int[] A, int target) {
+        int[] ret=new int[2];
+        if(A.length==0) return ret;
+        int len=A.length;
+        int l=0;
+        int r=len-1;
+        
+        while(l<r-1){
+            int mid=l+(r-l)/2;
+            if(A[mid]==target){
+                //when check for l bound, should be r=mid
+                r=mid;
+            }else if(A[mid]<target){
+                l=mid;
+            }else{
+                r=mid;
+            }
+        }
+        if(A[l]==target){
+            ret[0]=l;
+        }else if(A[r]==target){
+            ret[0]=r;
+        }else{
+            ret[0]=ret[1]=-1;
+            return ret;
+        }
+        
+        l=0;
+        r=len-1;
+        while(l<r-1){
+            int mid=l+(r-l)/2;
+            if(A[mid]==target){
+                //when check for r bound, should be l=mid
+                l=mid;
+            }else if(A[mid]<target){
+                l=mid;
+            }else{
+                r=mid;
+            }
+        }
+        if(A[r]==target){
+            ret[1]=r;
+        }else if(A[l]==target){
+            ret[1]=l;
+        }else{
+            ret[0]=ret[1]=-1;
+            return ret;
+        }
+        return ret;
+    }
+}
+
