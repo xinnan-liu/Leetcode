@@ -31,3 +31,118 @@ public class Solution {
         return res;
     }
 }
+
+
+
+
+redo:
+/*** TLE Recursion ***/
+public class Solution {
+	public List<List<Integer>> threeSum(int[] num) {
+		List<List<Integer>> ret = new ArrayList<List<Integer>>();
+		if(num == null || num.length < 3) {
+			return ret;
+		}
+		Arrays.sort(num);
+		helper(num, 0, 0, ret, new ArrayList<Integer>());
+		return ret;
+	}
+	
+	public void helper(int[] num, int index, int sum, List<List<Integer>> ret, List<Integer> l){
+        if(l.size()==3&&sum==0){
+            ret.add(new ArrayList<Integer>(l));
+            return;
+        }
+        
+        if(l.size()>3||sum>0) return;
+        
+        //List<Integer> list=new ArrayList<Integer>();
+        for(int i=index;i<num.length;i++){
+            int cur=num[i];
+            l.add(cur);
+            helper(num, index+1, sum+cur, ret, l);
+            l.remove(l.size()-1);
+        }
+    }
+}
+
+
+/*** TLE Iteration ***/
+public class Solution {
+    public List<List<Integer>> threeSum(int[] num) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        if(num.length==0) return ret;
+        Arrays.sort(num);
+        for(int i=0;i<num.length;i++){
+            int a=num[i];
+            int j=i+1;
+            int k=num.length-1;
+            while(j<k){
+                int b=num[j];
+                int c=num[k];
+                if((a+b+c)==0){
+                    List<Integer> tmp=new ArrayList<Integer>();
+                    tmp.add(a);
+                    tmp.add(b);
+                    tmp.add(c);
+                    if(!ret.contains(tmp)){
+                        ret.add(tmp);
+                    }
+                    j++;
+                    k--;
+                }else if((a+b+c)<0){
+                    j++;
+                }else{
+                    k--;
+                }
+            }
+        }
+        return ret;
+    }
+}
+
+
+
+/*** AC Solution ***/
+public class Solution {
+
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        
+        ArrayList<ArrayList<Integer>> rst = new ArrayList<ArrayList<Integer>>();
+        if(num == null || num.length < 3) {
+            return rst;
+        }
+        Arrays.sort(num);
+        for (int i = 0; i < num.length - 2; i++) {
+            if (i != 0 && num[i] == num[i - 1]) {
+                continue; // to skip duplicate numbers; e.g [0,0,0,0]
+            }
+
+            int left = i + 1;
+            int right = num.length - 1;
+            while (left < right) {
+                int sum = num[left] + num[right] + num[i];
+                if (sum == 0) {
+                    ArrayList<Integer> tmp = new ArrayList<Integer>();
+                    tmp.add(num[i]);
+                    tmp.add(num[left]);
+                    tmp.add(num[right]);
+                    rst.add(tmp);
+                    left++;
+                    right--;
+                    while (left < right && num[left] == num[left - 1]) { // to skip duplicates
+                        left++;
+                    }
+                    while (left < right && num[right] == num[right + 1]) { // to skip duplicates
+                        right--;
+                    }
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return rst;
+    }
+}
