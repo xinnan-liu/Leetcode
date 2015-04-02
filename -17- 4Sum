@@ -33,3 +33,50 @@ public class Solution {
         return res;
     }
 }
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> fourSum(int[] num, int target) {
+        List<List<Integer>> ret=new ArrayList<List<Integer>>();
+        int len=num.length;
+        if(num==null||len<4) return ret;
+        Arrays.sort(num);
+        for(int i=0;i<len-3;i++){
+            int a=num[i];
+            if(i>0&&num[i]==num[i-1]){
+                continue;
+            }
+            for(int j=i+1;j<len-2;j++){
+                if(j>i+1&&num[j]==num[j-1]){
+                    continue;
+                }
+                int b=num[j];
+                int k=j+1;
+                int l=len-1;
+                while(k<l){
+                    int c=num[k];
+                    int d=num[l];
+                    if(a+b+c+d==target){
+                        List<Integer> tmp=new ArrayList<Integer>();
+                        tmp.add(a);
+                        tmp.add(b);
+                        tmp.add(c);
+                        tmp.add(d);
+                        if(!ret.contains(tmp)){
+                            ret.add(tmp);
+                        }
+                        k++;
+                        l--;
+                    }
+                    else if(a+b+c+d<target){
+                        k++;
+                    }else{
+                        l--;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+}
