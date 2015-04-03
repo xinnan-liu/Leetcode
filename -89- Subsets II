@@ -26,3 +26,28 @@ public class Solution {
         }
     }
 }
+
+
+
+redo:
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] num) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        if(num == null) return ret;
+        //bug 1: should sort, cuz need non-descending order
+        Arrays.sort(num);
+        helper(new ArrayList<Integer>(), ret, num, 0);
+        return ret;
+    }
+    
+    public void helper(List<Integer> l, List<List<Integer>> ret, int[] num, int n){
+        if(!ret.contains(l)){
+            ret.add(new ArrayList<Integer>(l));
+        }
+        for(int i = n;i < num.length;i++){
+            l.add(num[i]);
+            helper(l, ret, num, i + 1);
+            l.remove(l.size() - 1);
+        }
+    }
+}
