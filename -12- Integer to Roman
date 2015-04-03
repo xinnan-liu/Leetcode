@@ -15,3 +15,27 @@ public class Solution {
         return res;
     }
 }
+
+
+redo:
+public class Solution {
+    public String intToRoman(int num) {
+        int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        /*
+            1000, 900, 500, 400, 100,  90,   50,   40,  10, 9, 5, 4, 1
+            "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X" IX V, IV, I
+        */
+        String[] strs = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+        while(i < nums.length){
+            if(num >= nums[i]){
+                sb.append(strs[i]);
+                num -= nums[i];
+            }else{
+                i++;
+            }
+        }
+        return sb.toString();
+    }
+}
