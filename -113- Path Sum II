@@ -59,3 +59,41 @@ public class Solution {
         // return ret;
     
 }
+
+
+
+
+redo:
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        if(root == null) return ret;
+        helper(new ArrayList<Integer>(), ret, sum, root);
+        return ret;
+    }
+    
+    public void helper(List<Integer> l, List<List<Integer>> ret, int sum, TreeNode root){
+        if(root == null) return;
+        
+        l.add(root.val);
+        //need to minus here, otherwise may miss the solution
+        sum -= root.val;
+        if(sum == 0 && root.left == null && root.right == null){
+            ret.add(new ArrayList<Integer>(l));
+            //return;
+        }else{
+            helper(l, ret, sum, root.left);
+            helper(l, ret, sum, root.right);
+        }
+        l.remove(l.size() - 1);
+    }
+}
