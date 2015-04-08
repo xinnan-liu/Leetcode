@@ -57,3 +57,37 @@ public class Solution {
         // }FF
     }
 }
+
+
+
+redo:
+public class Solution {
+    public int compareVersion(String version1, String version2) {
+        int l1=0;
+        int l2=0;
+        int pre1=l1, pre2=l2;
+        while(l1<version1.length()||l2<version2.length()){
+            while(l1<version1.length()){
+                if(version1.charAt(l1)=='.'){
+                    break;
+                }else{
+                    l1++;
+                }
+            }
+            while(l2<version2.length()){
+                if(version2.charAt(l2)=='.'){
+                    break;
+                }else{
+                    l2++;
+                }
+            }
+            int int1=pre1<l1? Integer.valueOf(version1.substring(pre1, l1)):0;
+            int int2=pre2<l2? Integer.valueOf(version2.substring(pre2, l2)):0;
+            if(int1>int2) return 1;
+            else if(int1<int2) return -1;
+            pre1=++l1;
+            pre2=++l2;
+        }
+        return 0;
+    }
+}
