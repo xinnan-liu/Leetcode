@@ -18,3 +18,25 @@ public class Solution {
          return true;
     }
 }
+
+
+
+
+redo:
+public class Solution {
+    public boolean canJump(int[] A) {
+        if(A==null) return false;
+        int len=A.length;
+        int next=0;
+        for(int i=0;i<len-1;i++){
+            next=Math.max(next, i+A[i]);
+            if(next==len-1){
+                return true;
+            }
+            if(i==next){
+                return false;
+            }
+        }
+        return true;
+    }
+}
