@@ -16,3 +16,33 @@ public class Solution {
         return steps[A.length - 1];
     }
 }
+
+
+
+
+redo:
+public class Solution {
+    public int jump(int[] A) {
+        if(A==null) return 0;
+        int len=A.length;
+        int start=0;
+        int end=0;
+        int step=0;
+        while(end<len-1){
+            int max=0;
+            step++;
+            for(int i=start;i<=end;i++){
+                max=Math.max(A[i]+i, max);
+                if(max>=len-1){
+                    return step;
+                }
+            }
+            start=end+1;
+            end=max;
+            if(start>max){
+                break;
+            }
+        }
+        return 0;
+    }
+}
