@@ -1,4 +1,4 @@
-#ngSolution
+ngSolution
 ===
 Markdown Test
 ===
